@@ -1,0 +1,12 @@
+/* src/styles/main.css */
+/* src/styles/main.css */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Define custom styles for screens with a minimum width of 830px (Medium screens) */
+@media (min-width: 839px) {
+    .custom-md {
+        width: 54vw;
+    }
+}
