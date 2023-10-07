@@ -22,7 +22,7 @@ export default function CountryList({ search, setSearch, theme, regions, selecte
 
       try { 
         setLoading(true);
-        const response = await fetch(`./src/data.json`);
+        const response = await fetch(`../src/data.json`);
         if (!response.ok) {
           throw new Error(`Something went wrong while fetching the data`);
         }
