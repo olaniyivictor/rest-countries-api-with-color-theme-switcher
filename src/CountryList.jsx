@@ -21,10 +21,12 @@ export default function CountryList({ search, setSearch, theme, regions, selecte
   useEffect(() => {
     async function fetchCountries() {
       try {
+        setLoading(true)
         // Use the imported JSON data directly
         setCountries(datajson);
       } catch (err) {
         console.error(err.message);
+        setError(err.message)
         // Set the error
       } finally {
         setLoading(false);
@@ -69,16 +71,15 @@ export default function CountryList({ search, setSearch, theme, regions, selecte
           </OptionList>
         </div>
       </div>
-      
-       <div className='p-[2rem] flex flex-col md:flex-row flex-wrap gap-[2rem] md:gap-[3rem] md:pl-[4rem] md:pt-[0.1rem] xl:gap-[3.3rem]'>
+      {loading && <Loading>Loading...</Loading>}
+       {!loading && !error && (<div className='p-[2rem] flex flex-col md:flex-row flex-wrap gap-[2rem] md:gap-[3rem] md:pl-[4rem] md:pt-[0.1rem] xl:gap-[3.3rem]'>
         {filteredCountries.map((country) => (
           <Link key={country.alpha3Code} to={`/country/${country.alpha3Code}`}>
           <Country country={country} theme={theme} search={search} setSearch={setSearch} selected={selected} />
         </Link>
         ))}
-      </div>
-      
-
+      </div>)}
+      {error && <ErrorMessage>{error}</ErrorMessage>}
     </div>
   );
 }
