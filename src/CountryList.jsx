@@ -21,7 +21,7 @@ export default function CountryList({ search, setSearch, theme, regions, selecte
     async function fetchCountries() {
 
       try { 
-        setLoading(true);
+        
         const response = await fetch(`../src/data.json`);
         if (!response.ok) {
           throw new Error(`Something went wrong while fetching the data`);
@@ -30,9 +30,8 @@ export default function CountryList({ search, setSearch, theme, regions, selecte
         setCountries(data);
       } catch (err) {
         console.error(err.message);
-        setError(err.message)
       
-        //settheError
+  //settheError
       }
       finally{
         setLoading(false)
@@ -78,15 +77,15 @@ export default function CountryList({ search, setSearch, theme, regions, selecte
           </OptionList>
         </div>
       </div>
-      {loading && <Loading>Loading...</Loading>}
-      {!loading && !error && ( <div className='p-[2rem] flex flex-col md:flex-row flex-wrap gap-[2rem] md:gap-[3rem] md:pl-[4rem] md:pt-[0.1rem] xl:gap-[3.3rem]'>
+      
+       <div className='p-[2rem] flex flex-col md:flex-row flex-wrap gap-[2rem] md:gap-[3rem] md:pl-[4rem] md:pt-[0.1rem] xl:gap-[3.3rem]'>
         {filteredCountries.map((country) => (
           <Link key={country.alpha3Code} to={`/country/${country.alpha3Code}`}>
           <Country country={country} theme={theme} search={search} setSearch={setSearch} selected={selected} />
         </Link>
         ))}
-      </div>)}
-      {error && <ErrorMessage>{error}</ErrorMessage>}
+      </div>
+      
 
     </div>
   );
