@@ -8,32 +8,33 @@ import {Link} from 'react-router-dom'
 import datajson from '../src/data.json';
 import Loading from './Loading';
 import ErrorMessage from './ErrorMessage';
-
-
-
 export default function CountryList({ search, setSearch, theme, regions, selected, setSelected,countries,setCountries,loading,setLoading,error,setError }) {
  
   function handleregion(e){
     const selectedvalue =(e.target.options[e.target.selectedIndex].value);
     setSelected(selectedvalue === 'all' ? '' : selectedvalue)
 
-  }
+  }  
   useEffect(() => {
     async function fetchCountries() {
       try {
-        setLoading(true)
-        // Use the imported JSON data directly
+        setLoading(true);
         setCountries(datajson);
+        setError(null); // Clear any previous errors if successful
       } catch (err) {
-        console.error(err.message);
-        setError(err.message)
-        // Set the error
+        console.error('Data Fetching Error:', err);
+        setError('Failed to fetch data. Please try again later.'); // Set a user-friendly error message
       } finally {
         setLoading(false);
       }
     }
-    fetchCountries();
-  }, []);
+  
+    fetchCountries(); // Call the async function
+  
+    // No dependencies array since we want this effect to run only once
+  }, []); // Empty dependencies array
+  
+  
   // Filter countries based on the search query and selected
  const filteredCountries = countries.filter((country)=>{
   //if the country name is in lowercase,the incldes return true and search it. 
