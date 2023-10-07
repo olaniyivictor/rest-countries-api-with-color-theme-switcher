@@ -5,8 +5,10 @@ import OptionList from './OptionList';
 import { useEffect } from 'react';
 import Country from './Country';
 import {Link} from 'react-router-dom'
+import datajson from '../src/data.json';
 import Loading from './Loading';
 import ErrorMessage from './ErrorMessage';
+
 
 
 export default function CountryList({ search, setSearch, theme, regions, selected, setSelected,countries,setCountries,loading,setLoading,error,setError }) {
@@ -16,27 +18,17 @@ export default function CountryList({ search, setSearch, theme, regions, selecte
     setSelected(selectedvalue === 'all' ? '' : selectedvalue)
 
   }
-  
-  useEffect(function () {
+  useEffect(() => {
     async function fetchCountries() {
-
-      try { 
-        
-        const response = await fetch(`../src/data.json`);
-        if (!response.ok) {
-          throw new Error(`Something went wrong while fetching the data`);
-        }
-        const data = await response.json();
-        setCountries(data);
+      try {
+        // Use the imported JSON data directly
+        setCountries(datajson);
       } catch (err) {
         console.error(err.message);
-      
-  //settheError
+        // Set the error
+      } finally {
+        setLoading(false);
       }
-      finally{
-        setLoading(false)
-      }
-    
     }
     fetchCountries();
   }, []);
